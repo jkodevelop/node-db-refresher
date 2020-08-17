@@ -1,8 +1,7 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
+const routerConf = require('./routes/index.js');
 
-app.get('/', function(req, res){
-   res.send("Hello world!");
-});
+routeConfig(app);
 
 app.listen(3001);

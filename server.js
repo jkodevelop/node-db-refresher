@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const routerConf = require('./routes/index.js');
+const bodyParser = require('body-parser');
 
 ////////////////////////////////////////////////////////////////
 // express-swagger-generator configurations
@@ -34,6 +35,11 @@ let options = {
 expressSwagger(options);
 // END OF: express-swagger-generator configurations
 ////////////////////////////////////////////////////////////////
+
+// support parsing of application/json type post data
+app.use(bodyParser.json());
+//support parsing of application/x-www-form-urlencoded post data
+app.use(bodyParser.urlencoded({ extended: true }));
 
 routeConfig(app);
 

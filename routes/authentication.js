@@ -1,14 +1,10 @@
 // auth
 const express = require('express')
   , r = express.Router();
-var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
+const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 
-var jwtConfig = {
-  'secret': 'jwtSecret2020',
-  'refreshTokenSecret': 'refreshSecret2020',
-  'tokenLife': 1800, // seconds to hours = half hour 
-  'refreshTokenLife': 86400 // seconds to hours = 24 hour
-};
+const _conf = require('../_config.js');
+const jwtConfig = _conf.jwtConfig;
 
 // storing token to lightly confirm this token is active and exists
 var inMEMORY_TOKENSTORE = {};

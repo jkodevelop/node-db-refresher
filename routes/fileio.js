@@ -10,7 +10,7 @@ var fs = require('fs');
  * @route POST /api/fileio/upload
  * @consumes multipart/form-data
  * @param {file} fileio.formData.required - upload file
- * @group file - File Handling
+ * @group File - File Handling
  * @returns {Error}  default - Unexpected error
  */
 r.post('/fileio/upload', function(req, res) {

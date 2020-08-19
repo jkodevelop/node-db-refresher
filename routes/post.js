@@ -6,7 +6,7 @@ const r = express.Router();
  * this is also an example of a post request
  * @route POST /api/post/body
  * @param {Sprite.model} sprite.body.required - Sprite description
- * @group post - POST API
+ * @group Post - POST API
  * @returns {Error}  default - Unexpected error
  */
 r.post('/post/body', function(req, res) {

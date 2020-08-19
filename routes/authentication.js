@@ -97,4 +97,28 @@ r.post('/retoken', function(req, res) {
 
 });   
 
+
+/**
+ * This function will verify your token, you must pass in header
+ * x-access-token: token
+ * the header params matches the swagger option, can be changed
+ * @route GET /api/verifytoken
+ * @group Authentication - Operations for Authentication
+ * @returns {object} 200 - new token
+ * @returns {Error}  default - Unexpected error
+ * @security JWT
+ */
+r.get('/verifytoken', function(req, res) {
+  console.log(req.headers);
+  var token = req.headers['x-access-token'];
+  if (!token) return res.status(401).send({ 'message': 'No token provided.' });
+  
+  jwt.verify(token, jwtConfig.secret, function(err, decoded) {
+    if (err) return res.status(500).send({ 'message': 'Failed to authenticate token.' });
+    
+    res.status(200).json(decoded); 
+
+  });
+});
+
 module.exports = r;

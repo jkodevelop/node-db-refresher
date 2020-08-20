@@ -43,6 +43,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 routeConfig(app);
 
+// express serving static content (html/jpg/css/etc...)
+app.use(express.static('./public_www')); // you can also just pass 'public_www' its relative path
+
 // catchall GET that doesn't fit an defined API signature
 app.get('*', function(req, res){
   let url = 'http://localhost:3001/api-docs';

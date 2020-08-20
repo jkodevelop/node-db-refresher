@@ -43,4 +43,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 routeConfig(app);
 
+// catchall GET that doesn't fit an defined API signature
+app.get('*', function(req, res){
+  let url = 'http://localhost:3001/api-docs';
+  // optional 1: send a static text back to client
+  // res.status(404).send(`no api like that, go to <a href="${url}">${url}</a>`);
+  // optional 2: redirect any path that doesn't exist to /api-docs
+  res.redirect(url);
+});
+
 app.listen(3001);

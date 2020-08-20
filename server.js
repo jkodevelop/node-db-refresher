@@ -3,6 +3,8 @@ const app = express();
 const routerConf = require('./routes/index.js');
 const bodyParser = require('body-parser');
 
+const requestTime= require('./middleware/requestTime');
+
 ////////////////////////////////////////////////////////////////
 // express-swagger-generator configurations
 var expressSwagger = require('express-swagger-generator')(app);
@@ -40,6 +42,8 @@ expressSwagger(options);
 app.use(bodyParser.json());
 //support parsing of application/x-www-form-urlencoded post data
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(requestTime);
 
 routeConfig(app);
 

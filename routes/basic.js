@@ -8,6 +8,7 @@ const r = express.Router();
  * @returns {Error}  default - Unexpected error
  */
 r.get('/', function(req, res) {
+  console.log('request time: ',req.requestTime);
   res.send('Hello!');
 });
 

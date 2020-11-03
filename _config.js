@@ -8,5 +8,5 @@ var jwtConfig = {
 };
 
 module.exports = {
-    'jwtConfig' : jwtConfig
+  'jwtConfig' : jwtConfig
 };

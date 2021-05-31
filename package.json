@@ -1,5 +1,5 @@
 {
-  "name": "express-swagger",
+  "name": "express-swagger-starter",
   "version": "1.0.0",
   "description": "express with swagger generator for REST-API",
   "main": "server.js",

@@ -1,5 +1,5 @@
 {
-  "name": "express-swagger-starter",
+  "name": "express-swagger-db-example",
   "version": "1.0.0",
   "description": "express with swagger generator for REST-API",
   "main": "server.js",
@@ -11,6 +11,7 @@
   "license": "MIT",
   "devDependencies": {
     "express-swagger-generator": "^1.1.17",
+    "mongodb": "^3.6.9",
     "nodemon": "^2.0.4"
   },
   "dependencies": {

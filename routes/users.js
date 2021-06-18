@@ -29,6 +29,8 @@ r.get('/users/latest', async (req, res) => {
     users = await user.findOne(query, options);
     // since this method returns the matched document, not a cursor, print it directly
     console.log(users);
+  } catch(ex) {
+    console.log(ex);
   } finally {
     await client.close();
   }

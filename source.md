@@ -1,21 +1,16 @@
--- creating multi array upload definitions
-https://github.com/swagger-api/swagger-ui/issues/4600
+# neo4j
 
--- jwt token
-https://www.freecodecamp.org/news/securing-node-js-restful-apis-with-json-web-tokens-9f811a92bb52/
+https://neo4j.com/developer/javascript/
+https://neo4j.com/docs/api/javascript-driver/current/
+https://neo4j.com/developer/javascript/
 
--- express middleware
-https://expressjs.com/en/guide/writing-middleware.html
+### examples:
+https://community.neo4j.com/t/connecting-neo4j-to-node/11524
 
--- useful middlewares & security
-https://blog.jscrambler.com/setting-up-5-useful-middlewares-for-an-express-api/
-https://zellwk.com/blog/express-middlewares/
-https://thecodebarbarian.com/80-20-guide-to-express-error-handling
-https://expressjs.com/en/advanced/best-practice-security.html
+### cypher tutorials:
+https://neo4j.com/blog/neo4j-video-tutorials/
+https://neo4j.com/developer/cypher/guide-cypher-basics/
+https://www.tutorialspoint.com/neo4j/index.htm
 
-
-**https support**
--- simple, self made
-https://nodejs.org/en/knowledge/HTTP/servers/how-to-create-a-HTTPS-server/
--- using let's encrypt
-https://itnext.io/node-express-letsencrypt-generate-a-free-ssl-certificate-and-run-an-https-server-in-5-minutes-a730fbe528ca
+### import csv
+https://www.youtube.com/watch?v=JhZaCw94r40

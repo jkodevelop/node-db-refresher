@@ -1,0 +1,7 @@
+CREATE (n:User {firstname:"J",lastname:"K",age:30,active:true});
+CREATE (n:User {firstname:"A",lastname:"B",age:30,active:true});
+
+MATCH (a:User),(b:User)
+  WHERE a.firstname="J" AND b.firstname="A"
+  MERGE (b)-[r:FRIENDS]->(a) 
+RETURN a,b

@@ -2,11 +2,9 @@ const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 
 const _conf = require('../_config.js');
 
-const basic = require('./basic.js');
-const post  = require('./post.js');
-const fileio= require('./fileio.js');
+const users = require('./users.js');
+const neo4jRoutes = require('./neo4j.js');
 const authentication= require('./authentication.js');
-const protected= require('./protected.js');
 
 
 const tokenProtectedPath = function(req, res, next) {
@@ -31,9 +29,6 @@ const tokenProtectedPath = function(req, res, next) {
 } // tokenProtectedPath
 
 module.exports = routeConfig = (app) => {
-  app.use('/api', basic);
-  app.use('/api', post);
-  app.use('/api', fileio);
   app.use('/api', authentication);
 
   /////////////////////////////
@@ -41,6 +36,8 @@ module.exports = routeConfig = (app) => {
   /////////////////////////////
 
   // protected paths because the middleware is applied forward
-  app.use('/api', tokenProtectedPath, protected);
+  // app.use('/api', tokenProtectedPath, users);
+  app.use('/api', tokenProtectedPath, users);
+  app.use('/api', tokenProtectedPath, neo4jRoutes);
 
 }

@@ -100,7 +100,7 @@ r.post('/users', async (req, res) => {
     const connection = await mysql.createConnection(mysqlOptions);
 
     const opsRes = await connection.query(
-      'INSERT INTO `users` (`email`, `first_name`, `last_name`) VALUES (?,?,?)',
+      'INSERT INTO `users` (`email`, `firstname`, `lastname`) VALUES (?,?,?)',
       [insertUser.email, insertUser.firstname, insertUser.lastname],
     );
 
@@ -142,7 +142,7 @@ r.put('/users/:id', async (req, res) => {
     const connection = await mysql.createConnection(mysqlOptions);
 
     const opsRes = await connection.query(
-      'UPDATE `users` SET `email`=?, `first_name`=?, `last_name`=? WHERE `id`=?',
+      'UPDATE `users` SET `email`=?, `firstname`=?, `lastname`=? WHERE `id`=?',
       [editUser.email, editUser.firstname, editUser.lastname, id],
     );
     console.log('result:', opsRes);
@@ -177,6 +177,48 @@ r.delete('/users/:id', async (req, res) => {
     const opsRes = await connection.query(
       'DELETE FROM `users` WHERE `id`=?',
       [id],
+    );
+    console.log('result:', opsRes);
+    resp = { 'affectedRows': opsRes[0].affectedRows }
+    connection.end();
+
+  } catch(ex) {
+    console.log(ex);
+  } finally {
+    console.log('finish');
+  }
+
+  // console.log('request time: ',req.requestTime);
+  res.json(resp);
+});
+
+/**
+ * Update user by id - stored procedure example
+ * @route PUT /api/users/update/{id}/active/{active}
+ * @group Users - Users Management
+ * @param {integer} id.path.required - id of user
+ * @param {boolean} active.path.required - active true or false
+ * @returns {Error}  default - Unexpected error
+ * @security JWT
+ */
+r.put('/users/update/:id/active/:active', async (req, res) => {
+
+  let postBody = req.body;
+  let editUser = {
+    'email': postBody.email ? postBody.email : '',
+    'firstname': postBody.firstname ? postBody.firstname : '',
+    'lastname': postBody.lastname ? postBody.lastname : '',
+  };
+  const id = req.params.id;
+  const active = req.params.active == 'true' ? 1:0;
+
+  let resp;
+  try{
+    const connection = await mysql.createConnection(mysqlOptions);
+
+    const opsRes = await connection.query(
+      'CALL setActive(?,?)',
+      [active,id],
     );
     console.log('result:', opsRes);
     resp = { 'affectedRows': opsRes[0].affectedRows }

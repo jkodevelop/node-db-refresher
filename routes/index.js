@@ -36,7 +36,6 @@ module.exports = routeConfig = (app) => {
   /////////////////////////////
 
   // protected paths because the middleware is applied forward
-  // app.use('/api', tokenProtectedPath, users);
   app.use('/api', tokenProtectedPath, users);
   app.use('/api', tokenProtectedPath, neo4jRoutes);
 

@@ -106,6 +106,11 @@ CREATE CONSTRAINT order_id ON (o:Order) ASSERT o.orderID IS UNIQUE;
 CALL db.awaitIndexes();
 ```
 
+show indexes
+```
+SHOW INDEXES
+```
+
 create **Relationship**
 ```
 MATCH (a:Employee), (b:Company) WHERE a.name = "Jay Kay" AND b.name = "Amazoom" 
@@ -113,6 +118,11 @@ CREATE (b)-[r:EMPLOYED]->(a)
 RETURN a,b 
 
 CREATE (p:Person {name:"J"})-[:LIKES {start:2018}]->(t:Technology {name:"Neo4j"})
+```
+
+create relationship index
+```
+CREATE INDEX rel_index_name FOR ()-[r:KNOWS]-() ON (r.since)
 ```
 
 create a Path using **Relationship**
@@ -143,6 +153,11 @@ MATCH (p:Person)<-[:LIKES]-(t:Technology)
 
 //better to query with undirected relationship unless sure of direction
 MATCH (p:Person)-[:LIKES]-(t:Technology)
+```
+
+delete all nodes and relationships
+```
+MATCH (n) DETACH DELETE n
 ```
 
 query examples

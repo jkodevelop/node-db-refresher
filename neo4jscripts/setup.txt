@@ -1,7 +1,9 @@
-CREATE (n:User {firstname:"J",lastname:"K",age:30,active:true});
-CREATE (n:User {firstname:"A",lastname:"B",age:30,active:true});
+CREATE (n:User {uid:1519211809934,firstname:"J",lastname:"K",email:"j@test.com",active:true});
+CREATE (n:User {uid:1519211810362,firstname:"A",lastname:"B",email:"a@test.com",active:true});
 
 MATCH (a:User),(b:User)
   WHERE a.firstname="J" AND b.firstname="A"
   MERGE (b)-[r:FRIENDS]->(a) 
-RETURN a,b
+RETURN a,b;
+
+CREATE INDEX user_id FOR (u:User) ON (u.uid);

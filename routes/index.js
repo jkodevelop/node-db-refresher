@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 const _conf = require('../_config.js');
 
 const users = require('./users.js');
+const relationships = require('./relationships.js');
 const neo4jRoutes = require('./neo4j.js');
 const authentication= require('./authentication.js');
 
@@ -37,6 +38,7 @@ module.exports = routeConfig = (app) => {
 
   // protected paths because the middleware is applied forward
   app.use('/api', tokenProtectedPath, users);
+  app.use('/api', tokenProtectedPath, relationships);
   app.use('/api', tokenProtectedPath, neo4jRoutes);
 
 }

@@ -2,12 +2,7 @@ const express = require('express');
 const r = express.Router();
 const { neo4jConf } = require('../_config.js');
 const neo4j = require('neo4j-driver');
-
-// Neo4j does not recommend using their internal node ID for identity,
-// so it's better to create one
-function getTimeStampUID(){
-  return Date.now();
-}
+const { getTimeStampUID, neo4jOptions } = require('../helpers/helper.js');
 
 /**
  * Get newest user
@@ -23,7 +18,8 @@ r.get('/users/latest', async (req, res) => {
   try{
     driver = neo4j.driver(
       neo4jConf.connection, 
-      neo4j.auth.basic(neo4jConf.user, neo4jConf.password));
+      neo4j.auth.basic(neo4jConf.user, neo4jConf.password),
+      neo4jOptions);
     // Create Driver session
     session = driver.session({ database: neo4jConf.database });
     // Run Cypher query
@@ -70,7 +66,8 @@ r.get('/users/get/:uid', async (req, res) => {
   try{
     driver = neo4j.driver(
       neo4jConf.connection, 
-      neo4j.auth.basic(neo4jConf.user, neo4jConf.password));
+      neo4j.auth.basic(neo4jConf.user, neo4jConf.password),
+      neo4jOptions);
     // Create Driver session
     session = driver.session({ database: neo4jConf.database });
     // Run Cypher query
@@ -135,7 +132,8 @@ r.post('/users', async (req, res) => {
   try{
     driver = neo4j.driver(
       neo4jConf.connection, 
-      neo4j.auth.basic(neo4jConf.user, neo4jConf.password));
+      neo4j.auth.basic(neo4jConf.user, neo4jConf.password),
+      neo4jOptions);
     // Create Driver session
     session = driver.session({ database: neo4jConf.database });
     // Run Cypher query
@@ -196,7 +194,8 @@ r.put('/users/:uid', async (req, res) => {
   try{
     driver = neo4j.driver(
       neo4jConf.connection, 
-      neo4j.auth.basic(neo4jConf.user, neo4jConf.password));
+      neo4j.auth.basic(neo4jConf.user, neo4jConf.password),
+      neo4jOptions);
     // Create Driver session
     session = driver.session({ database: neo4jConf.database });
     // Run Cypher query
@@ -245,7 +244,8 @@ r.delete('/users/:uid', async (req, res) => {
   try{
     driver = neo4j.driver(
       neo4jConf.connection, 
-      neo4j.auth.basic(neo4jConf.user, neo4jConf.password));
+      neo4j.auth.basic(neo4jConf.user, neo4jConf.password),
+      neo4jOptions);
     // Create Driver session
     session = driver.session({ database: neo4jConf.database });
     // Run Cypher query

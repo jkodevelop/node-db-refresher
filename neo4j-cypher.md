@@ -160,6 +160,30 @@ delete all nodes and relationships
 MATCH (n) DETACH DELETE n
 ```
 
+delete relationship
+```
+MATCH (n {id:1})-[r:KNOWS]->()
+DELETE r
+```
+
+query by relationships
+```
+// this returns all relationships in database
+MATCH ()-[r]-() RETURN DISTINCT r
+
+MATCH (:User {uid: toInteger(1519211810362)})-[r]-() RETURN r
+
+MATCH (:User {uid: toInteger(1519211810362)})-[r]-(:User {uid: toInteger(1519211809934)}) RETURN r
+
+// complex example
+WITH collect(rel) AS allr 
+RETURN Reduce(allDistR =[], rcol IN allr | 
+  reduce(distR = allDistR, r IN rcol | 
+         distR +  CASE WHEN type(r) IN distR  THEN []  ELSE type(r) END 
+        )
+  )
+```
+
 query examples
 ```
 MATCH (tom:Person {name:'Tom Hanks'})-[rel:DIRECTED]-(movie:Movie)

@@ -8,6 +8,7 @@ const neo4j = require('neo4j-driver');
  * @route GET /api/neo4j/status
  * @group Neo4j Database - Basic Database Server APIs
  * @returns {Error}  default - Unexpected error
+ * @security JWT
  */
 r.get('/neo4j/status', function(req, res) {
 

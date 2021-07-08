@@ -215,6 +215,64 @@ r.delete('/relationships/del', async (req, res) => {
   res.json(dbRes);
 });
 
+/**
+ * Edit relationships when "Friends" between two nodes that exists
+ * @route PUT /api/relationships/edit
+ * @group Relationships - Neo4j Relationship Management Examples
+ * @param {FriendshipEdit.model} friendshipedit.body.required - Friend object
+ * @returns {Error}  default - Unexpected error
+ * @security JWT
+ */
+r.put('/relationships/edit', async (req, res) => {
+
+  const postBody = req.body;
+  let friendshipedit = {
+    'when': postBody.when ? postBody.when : '',
+    'changewhen': postBody.changewhen ? postBody.changewhen : '',
+    'uidfrom': postBody.uidfrom ? postBody.uidfrom : 0,
+    'uidto': postBody.uidto ? postBody.uidto : 0,
+  };
+
+  let driver, session;
+  let dbRes;
+  try{
+    driver = neo4j.driver(
+      neo4jConf.connection, 
+      neo4j.auth.basic(neo4jConf.user, neo4jConf.password),
+      neo4jOptions);
+    // Create Driver session
+    session = driver.session({ database: neo4jConf.database });
+    // Run Cypher query
+    const cypher = `MATCH (a:User {uid:toInteger($uidfrom)})-[r:FRIENDS {when:$when}]-(b:User {uid:toInteger($uidto)}) 
+      SET r.when=$changewhen 
+      RETURN r`;
+    const result = await session.run(
+      cypher,
+      friendshipedit
+    );
+    console.log(result);
+
+    if(result.records.length > 0){
+      dbRes = result.records;
+    }
+  }catch(ex){
+    console.error(ex);
+    res.status(500).send({ 
+      'err': 'Database error' 
+    });
+  } finally {
+    if(session){
+      await session.close();
+    }
+    if(driver){
+      // on application exit:
+      await driver.close()
+    }
+  }
+  // console.log('request time: ',req.requestTime);
+  res.json(dbRes);
+});
+
 module.exports = r;
 
 /**
@@ -224,6 +282,10 @@ module.exports = r;
  * @property {integer} uidto.required - uid of node to
  */
 
-// MATCH (a:User {uid:toInteger($uidfrom)})-[r:FRIENDS {when:$when}]-(b:User {uid:toInteger($uidto)}) 
-// SET r.when=$when
-// RETURN r
+/**
+ * @typedef FriendshipEdit
+ * @property {string} when.required - start of friendship
+ * @property {string} changewhen.required - edit when value
+ * @property {integer} uidfrom.required - uid of node from
+ * @property {integer} uidto.required - uid of node to
+ */
